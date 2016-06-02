@@ -611,26 +611,26 @@ describe('Google Analytics', function() {
         });
 
         it('should require ecommerce.js', function() {
-          analytics.track('completed order', { orderId: 'ee099bf7' });
+          analytics.track('order completed', { orderId: 'ee099bf7' });
           analytics.called(window.ga, 'require', 'ecommerce');
           analytics.assert(ga.ecommerce);
         });
 
         it('should not require ecommerce if .ecommerce is true', function() {
           ga.ecommerce = true;
-          analytics.track('completed order', { orderId: 'e213e4da' });
+          analytics.track('order completed', { orderId: 'e213e4da' });
           analytics.didNotCall(window.ga, 'require', 'ecommerce');
         });
 
         it('should send simple ecommerce data', function() {
-          analytics.track('completed order', { orderId: '7306cc06' });
+          analytics.track('order completed', { orderId: '7306cc06' });
           analytics.assert(window.ga.args.length === 3);
           analytics.assert(window.ga.args[1][0] === 'ecommerce:addTransaction');
           analytics.assert(window.ga.args[2][0] === 'ecommerce:send');
         });
 
         it('should send ecommerce data', function() {
-          analytics.track('completed order', {
+          analytics.track('order completed', {
             orderId: '780bc55',
             total: 99.99,
             shipping: 13.99,
@@ -681,7 +681,7 @@ describe('Google Analytics', function() {
         });
 
         it('should fallback to revenue', function() {
-          analytics.track('completed order', {
+          analytics.track('order completed', {
             orderId: '5d4c7cb5',
             revenue: 99.9,
             shipping: 13.99,
@@ -700,7 +700,7 @@ describe('Google Analytics', function() {
         });
 
         it('should pass custom currency', function() {
-          analytics.track('completed order', {
+          analytics.track('order completed', {
             orderId: '5d4c7cb5',
             revenue: 99.9,
             shipping: 13.99,
@@ -753,30 +753,30 @@ describe('Google Analytics', function() {
         });
 
         it('should require ec.js', function() {
-          analytics.track('completed order', { orderId: 'ee099bf7' });
+          analytics.track('order completed', { orderId: 'ee099bf7' });
           analytics.assert(window.ga.args.length > 0);
           analytics.deepEqual(window.ga.args[0], ['require', 'ec']);
         });
 
         it('should not require ec if .enhancedEcommerceLoaded is true', function() {
           ga.enhancedEcommerceLoaded = true;
-          analytics.track('completed order', { orderId: 'e213e4da' });
+          analytics.track('order completed', { orderId: 'e213e4da' });
           analytics.assert(window.ga.args.length > 0);
           analytics.notDeepEqual(window.ga.args[0], ['require', 'ec']);
         });
 
         it('should set currency for ec.js  to default', function() {
-          analytics.track('completed order', { orderId: 'ee099bf7' });
+          analytics.track('order completed', { orderId: 'ee099bf7' });
           analytics.deepEqual(window.ga.args[1], ['set', '&cu', 'USD']);
         });
 
         it('should set currency for ec.js to custom currency', function() {
-          analytics.track('completed order', { orderId: 'ee099bf7', currency: 'EUR' });
+          analytics.track('order completed', { orderId: 'ee099bf7', currency: 'EUR' });
           analytics.deepEqual(window.ga.args[1], ['set', '&cu', 'EUR']);
         });
 
-        it('should send added product data', function() {
-          analytics.track('added product', {
+        it('should send product added data', function() {
+          analytics.track('product added', {
             currency: 'CAD',
             quantity: 1,
             price: 24.75,
@@ -798,11 +798,11 @@ describe('Google Analytics', function() {
             currency: 'CAD'
           }]);
           analytics.deepEqual(window.ga.args[3], ['ec:setAction', 'add', {}]);
-          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'added product', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'product added', { nonInteraction: 1 }]);
         });
 
         it('should send send label tracking enhanced ecommerce events with Univeral Analytics', function() {
-          analytics.track('added product', {
+          analytics.track('product added', {
             currency: 'CAD',
             quantity: 1,
             price: 24.75,
@@ -825,11 +825,11 @@ describe('Google Analytics', function() {
             currency: 'CAD'
           }]);
           analytics.deepEqual(window.ga.args[3], ['ec:setAction', 'add', {}]);
-          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'added product', 'sample label', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'product added', 'sample label', { nonInteraction: 1 }]);
         });
 
-        it('should send removed product data', function() {
-          analytics.track('removed product', {
+        it('should send product removed data', function() {
+          analytics.track('product removed', {
             currency: 'CAD',
             quantity: 1,
             price: 24.75,
@@ -851,11 +851,11 @@ describe('Google Analytics', function() {
             currency: 'CAD'
           }]);
           analytics.deepEqual(window.ga.args[3], ['ec:setAction', 'remove', {}]);
-          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'removed product', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'product removed', { nonInteraction: 1 }]);
         });
 
-        it('should send viewed product data', function() {
-          analytics.track('viewed product', {
+        it('should send product viewed data', function() {
+          analytics.track('product viewed', {
             currency: 'CAD',
             quantity: 1,
             price: 24.75,
@@ -880,11 +880,11 @@ describe('Google Analytics', function() {
           analytics.deepEqual(window.ga.args[3], ['ec:setAction', 'detail', {
             list: 'Apparel Gallery'
           }]);
-          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'viewed product', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'product viewed', { nonInteraction: 1 }]);
         });
 
-        it('should send clicked product data', function() {
-          analytics.track('clicked product', {
+        it('should send product clicked data', function() {
+          analytics.track('product clicked', {
             currency: 'CAD',
             quantity: 1,
             price: 24.75,
@@ -909,11 +909,11 @@ describe('Google Analytics', function() {
           analytics.deepEqual(window.ga.args[3], ['ec:setAction', 'click', {
             list: 'search results'
           }]);
-          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'clicked product', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'cat 1', 'product clicked', { nonInteraction: 1 }]);
         });
 
-        it('should send viewed promotion data', function() {
-          analytics.track('viewed promotion', {
+        it('should send promotion viewed data', function() {
+          analytics.track('promotion viewed', {
             currency: 'CAD',
             id: 'PROMO_1234',
             name: 'Summer Sale',
@@ -930,11 +930,11 @@ describe('Google Analytics', function() {
             creative: 'summer_banner2',
             position: 'banner_slot1'
           }]);
-          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'viewed promotion', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'promotion viewed', { nonInteraction: 1 }]);
         });
 
-        it('should send clicked promotion data', function() {
-          analytics.track('clicked promotion', {
+        it('should send promotion clicked data', function() {
+          analytics.track('promotion clicked', {
             currency: 'CAD',
             id: 'PROMO_1234',
             name: 'Summer Sale',
@@ -952,11 +952,11 @@ describe('Google Analytics', function() {
             position: 'banner_slot1'
           }]);
           analytics.deepEqual(window.ga.args[3], ['ec:setAction', 'promo_click', {}]);
-          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'EnhancedEcommerce', 'clicked promotion', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[4], ['send', 'event', 'EnhancedEcommerce', 'promotion clicked', { nonInteraction: 1 }]);
         });
 
-        it('should send started order data', function() {
-          analytics.track('started order', {
+        it('should send order started data', function() {
+          analytics.track('order started', {
             currency: 'CAD',
             products: [{
               quantity: 1,
@@ -998,11 +998,11 @@ describe('Google Analytics', function() {
             step: 1,
             option: 'Visa'
           }]);
-          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'started order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'order started', { nonInteraction: 1 }]);
         });
 
-        it('should send updated order data', function() {
-          analytics.track('updated order', {
+        it('should send order updated data', function() {
+          analytics.track('order updated', {
             currency: 'CAD',
             products: [{
               quantity: 1,
@@ -1047,11 +1047,11 @@ describe('Google Analytics', function() {
             step: 1,
             option: 'Visa'
           }]);
-          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'updated order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'order updated', { nonInteraction: 1 }]);
         });
 
-        it('should send viewed checkout step data', function() {
-          analytics.track('viewed checkout step', {
+        it('should send checkout step viewed data', function() {
+          analytics.track('checkout step viewed', {
             currency: 'CAD',
             step: 2
           });
@@ -1062,11 +1062,11 @@ describe('Google Analytics', function() {
             step: 2,
             option: undefined
           }]);
-          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'viewed checkout step', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'checkout step viewed', { nonInteraction: 1 }]);
         });
 
-        it('should send completed checkout step data', function() {
-          analytics.track('completed checkout step', {
+        it('should send checkout step completed data', function() {
+          analytics.track('checkout step completed', {
             currency: 'CAD',
             step: 2,
             shippingMethod: 'FedEx'
@@ -1081,8 +1081,8 @@ describe('Google Analytics', function() {
           analytics.deepEqual(window.ga.args[3], ['send', 'event', 'Checkout', 'Option']);
         });
 
-        it('should send completed checkout step data with all options', function() {
-          analytics.track('completed checkout step', {
+        it('should send checkout step completed data with all options', function() {
+          analytics.track('checkout step completed', {
             currency: 'CAD',
             step: 2,
             paymentMethod: 'Visa',
@@ -1098,8 +1098,8 @@ describe('Google Analytics', function() {
           analytics.deepEqual(window.ga.args[3], ['send', 'event', 'Checkout', 'Option']);
         });
 
-        it('should not send completed checkout step data without a step', function() {
-          analytics.track('completed checkout step', {
+        it('should not send checkout step completed data without a step', function() {
+          analytics.track('checkout step completed', {
             currency: 'CAD',
             shippingMethod: 'FedEx'
           });
@@ -1107,8 +1107,8 @@ describe('Google Analytics', function() {
           analytics.assert(window.ga.args.length === 0);
         });
 
-        it('should not send completed checkout step data without an option', function() {
-          analytics.track('completed checkout step', {
+        it('should not send checkout step completed data without an option', function() {
+          analytics.track('checkout step completed', {
             currency: 'CAD',
             step: 2
           });
@@ -1116,8 +1116,8 @@ describe('Google Analytics', function() {
           analytics.assert(window.ga.args.length === 0);
         });
 
-        it('should send simple completed order data', function() {
-          analytics.track('completed order', { orderId: '7306cc06' });
+        it('should send simple order completed data', function() {
+          analytics.track('order completed', { orderId: '7306cc06' });
           analytics.assert(window.ga.args.length === 4);
           analytics.deepEqual(window.ga.args[2], ['ec:setAction', 'purchase', {
             id: '7306cc06',
@@ -1127,11 +1127,11 @@ describe('Google Analytics', function() {
             shipping: undefined,
             coupon: undefined
           }]);
-          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'completed order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'order completed', { nonInteraction: 1 }]);
         });
 
-        it('should send completed order data', function() {
-          analytics.track('completed order', {
+        it('should send order completed data', function() {
+          analytics.track('order completed', {
             orderId: '780bc55',
             total: 99.9,
             shipping: 13.99,
@@ -1185,11 +1185,11 @@ describe('Google Analytics', function() {
             shipping: 13.99,
             coupon: 'coupon'
           }]);
-          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'completed order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'order completed', { nonInteraction: 1 }]);
         });
 
-        it('should add coupon to product level in completed order', function() {
-          analytics.track('completed order', {
+        it('should add coupon to product level in order completed', function() {
+          analytics.track('order completed', {
             orderId: '780bc55',
             total: 99.9,
             shipping: 13.99,
@@ -1245,11 +1245,11 @@ describe('Google Analytics', function() {
             shipping: 13.99,
             coupon: 'coupon'
           }]);
-          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'completed order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'order completed', { nonInteraction: 1 }]);
         });
 
-        it('completed order should fallback to revenue', function() {
-          analytics.track('completed order', {
+        it('order completed should fallback to revenue', function() {
+          analytics.track('order completed', {
             orderId: '5d4c7cb5',
             revenue: 99.9,
             shipping: 13.99,
@@ -1267,18 +1267,18 @@ describe('Google Analytics', function() {
           }]);
         });
 
-        it('should send full refunded order data', function() {
-          analytics.track('refunded order', { orderId: '780bc55' });
+        it('should send full order refunded data', function() {
+          analytics.track('order refunded', { orderId: '780bc55' });
 
           analytics.assert(window.ga.args.length === 4);
           analytics.deepEqual(window.ga.args[2], ['ec:setAction', 'refund', {
             id: '780bc55'
           }]);
-          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'refunded order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[3], ['send', 'event', 'EnhancedEcommerce', 'order refunded', { nonInteraction: 1 }]);
         });
 
-        it('should send partial refunded order data', function() {
-          analytics.track('refunded order', {
+        it('should send partial order refunded data', function() {
+          analytics.track('order refunded', {
             orderId: '780bc55',
             products: [{
               quantity: 1,
@@ -1301,7 +1301,7 @@ describe('Google Analytics', function() {
           analytics.deepEqual(window.ga.args[4], ['ec:setAction', 'refund', {
             id: '780bc55'
           }]);
-          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'refunded order', { nonInteraction: 1 }]);
+          analytics.deepEqual(window.ga.args[5], ['send', 'event', 'EnhancedEcommerce', 'order refunded', { nonInteraction: 1 }]);
         });
       });
     });
@@ -1496,7 +1496,7 @@ describe('Google Analytics', function() {
         });
 
         it('should send simple ecommerce data', function() {
-          analytics.track('completed order', { orderId: '078781c7' });
+          analytics.track('order completed', { orderId: '078781c7' });
           analytics.assert(window._gaq.push.args.length === 3);
           analytics.assert(window._gaq.push.args[0][0][0] === '_addTrans');
           analytics.deepEqual(['_set', 'currencyCode', 'USD'], window._gaq.push.args[1][0]);
@@ -1504,7 +1504,7 @@ describe('Google Analytics', function() {
         });
 
         it('should send ecommerce data', function() {
-          analytics.track('completed order', {
+          analytics.track('order completed', {
             orderId: 'af5ccd73',
             total: 99.99,
             shipping: 13.99,
@@ -1566,7 +1566,7 @@ describe('Google Analytics', function() {
         });
 
         it('should fallback to revenue', function() {
-          analytics.track('completed order', {
+          analytics.track('order completed', {
             orderId: 'f2ffee5c',
             revenue: 9,
             shipping: 3,
